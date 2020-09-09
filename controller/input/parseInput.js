@@ -41,5 +41,5 @@ const inputParser = (() => {
 
 const filepath = inputParser.readInput(process.argv);
 const commandsFromFile = inputParser.getInputFileContents(filepath);
-commandParser.getFileContents(commandsFromFile);
+commandParser.filterValidCommands(commandsFromFile);
 commandParser.processCommands();
