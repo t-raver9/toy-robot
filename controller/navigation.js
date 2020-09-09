@@ -78,7 +78,7 @@ const navigator = (() => {
         return `${x},${y},${direction}`
     };
 
-    return { setX, setY, setDirection, move, rotate, place, report, getX };
+    return { setX, setY, setDirection, move, rotate, place, report };
 
 })();
 

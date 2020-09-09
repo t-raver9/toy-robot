@@ -14,7 +14,7 @@ const inputParser = (() => {
     }
 
     const readDefaultInput = () => {
-        const filepath = '../input.txt';
+        const filepath = './input.txt';
         return filepath;
     }
 
