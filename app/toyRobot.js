@@ -1,11 +1,13 @@
 import { inputParser } from '../controller/input/parseInput.js'
 import { commandParser } from '../controller/input/parseCommands.js'
+
 import { navigator } from '../controller/navigation.js'
 
-import { RotateCommand } from '../models/commands/rotateCommand.js'
-import { MoveCommand } from '../models/commands/moveCommand.js'
-import { PlaceCommand } from '../models/commands/placeCommand.js'
-import { ReportCommand } from '../models/commands/reportCommand.js'
+import { MoveCommand } from '../commands/moveCommand.js'
+import { PlaceCommand } from '../commands/placeCommand.js'
+import { ReportCommand } from '../commands/reportCommand.js'
+import { RightCommand } from '../commands/rightCommand.js'
+import { LeftCommand } from '../commands/leftCommand.js'
 
 const main = (args) => {
     // Gather commands from input file
@@ -21,6 +23,7 @@ const main = (args) => {
 
     // Instantiate the navigator with the first place command, should
     // it exist
+    // let navigator = Navigator();
     if (commandObjectsList) {
         const initCommand = commandObjectsList.shift();
         navigator.place(initCommand);
@@ -29,14 +32,18 @@ const main = (args) => {
     // Process remaining objects
     for (let i=0; i<commandObjectsList.length; i++) {
         let command = commandObjectsList[i];
-        if (command instanceof RotateCommand) {
-            navigator.rotate(command);
-        } else if (command instanceof MoveCommand) {
+        if (command instanceof MoveCommand) {
             navigator.move(command);
         } else if (command instanceof PlaceCommand) {
             navigator.place(command);
+        } else if (command instanceof RightCommand) {
+            navigator.rotate(command);
+        } else if (command instanceof LeftCommand) {
+            navigator.rotate(command);
         } else if (command instanceof ReportCommand) {
             console.log(navigator.report());
+        } else {
+            console.log(command.getCommandString());
         }
     }
 

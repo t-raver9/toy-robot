@@ -33,28 +33,38 @@ const navigator = (() => {
 
     const move = () => {
         switch (direction) {
-            case ('NORTH' && (y < boardConfig.boardHeight)) :
-                y += 1;
+            case 'NORTH' :
+                if (y < boardConfig.boardHeight) {
+                    y++;
+                };
                 break;
-            case ('SOUTH' && (y > 0)) :
-                y -= 1;
+            case 'SOUTH' :
+                if (y > 0) {
+                    y--;
+                }
                 break;
-            case ('EAST' && (x < boardConfig.boardWidth)) :
-                x += 1;
+            case 'EAST' :
+                if (x < boardConfig.boardWidth) {
+                    x++;
+                }
                 break;
-            case ('WEST' && (x > 0)) :
-                x -= 1;
+            case 'WEST' :
+                if (x > 0) {
+                    x--;
+                }
                 break;
         }
     }
 
     const rotate = (command) => {
-        rotationDirection = command.getCommandString();
+        let rotationDirection = command.getCommandString();
         switch (rotationDirection) {
             case 'RIGHT':
-                direction = rotateRightDict[direction];
+                setDirection(rotateRightDict[direction]);
+                break;
             case 'LEFT':
-                direction = rotateLeftDict[direction];
+                setDirection(rotateLeftDict[direction]);
+                break;
         }
     }
 
@@ -68,7 +78,7 @@ const navigator = (() => {
         return `${x},${y},${direction}`
     };
 
-    return { setX, setY, setDirection, move, rotate, place, report };
+    return { setX, setY, setDirection, move, rotate, place, report, getX };
 
 })();
 
