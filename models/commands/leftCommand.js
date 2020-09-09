@@ -1,7 +1,7 @@
-import { Command } from './command.js'
+import { RotateCommand } from './rotateCommand.js'
 
 const LeftCommand = () => {
-    const prototype = Command();
+    const prototype = RotateCommand();
     const getCommandString = () => {
         return 'LEFT';
     };

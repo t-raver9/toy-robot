@@ -5,6 +5,7 @@ import { RightCommand } from '../../models/commands/rightCommand.js'
 import { MoveCommand } from '../../models/commands/moveCommand.js'
 import { PlaceCommand } from '../../models/commands/placeCommand.js'
 import { ReportCommand } from '../../models/commands/reportCommand.js'
+import { dir } from 'console'
 
 const commandParser = (() => {
     const COMMAND_PLACE = 'PLACE';
@@ -26,25 +27,26 @@ const commandParser = (() => {
         let placeCommandSeen = false;
         for (let i=0; i<validCommands.length; i++) {
             if (validCommands[i].startsWith(COMMAND_PLACE)) {
-                if (placeCommandValidator.checkValidPlacement(validCommands[i])) {
+                let { x, y, direction } = placeCommandValidator.placeCommandSplitter(validCommands[i]);
+                if (placeCommandValidator.checkValidPlacement(x, y)) {
                     placeCommandSeen = true;
-                    commandObjectsList.push(PlaceCommand(validCommands[i]));
+                    commandObjectsList.push(PlaceCommand(x, y, direction));
+                } else {
+                    throw 'INVALID PLACEMENT';
                 }
             } else if (!placeCommandSeen) {
                 continue;
-            } else if (validCommands[i].startsWith(COMMAND_MOVE)) {
+            } else if (validCommands[i] === COMMAND_MOVE) {
                 commandObjectsList.push(MoveCommand(validCommands[i]));
-            } else if (validCommands[i].startsWith(COMMAND_REPORT)) {
+            } else if (validCommands[i] === COMMAND_REPORT) {
                 commandObjectsList.push(ReportCommand(validCommands[i]));
-            } else if (validCommands[i].startsWith(COMMAND_RIGHT)) {
+            } else if (validCommands[i] === COMMAND_RIGHT) {
                 commandObjectsList.push(RightCommand(validCommands[i]));
             } else if (placeCommandSeen) {
                 commandObjectsList.push(LeftCommand(validCommands[i]));
             }
         }
-        commandObjectsList.forEach((command) => {
-            console.log(command.getCommandString());
-        })
+        return commandObjectsList;
     }
 
     return { filterValidCommands, processCommands };

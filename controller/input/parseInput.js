@@ -1,5 +1,3 @@
-import { commandParser } from './parseCommands.js'
-
 import fs from 'fs'
 
 const inputParser = (() => {
@@ -12,6 +10,11 @@ const inputParser = (() => {
         } else {
             throw 'Invalid input format - please refer to docs';
         }
+        return filepath;
+    }
+
+    const readDefaultInput = () => {
+        const filepath = '../input.txt';
         return filepath;
     }
 
@@ -36,10 +39,7 @@ const inputParser = (() => {
         }
     }
 
-    return { readInput, getInputFileContents };
+    return { readInput, readDefaultInput, getInputFileContents };
 })();
 
-const filepath = inputParser.readInput(process.argv);
-const commandsFromFile = inputParser.getInputFileContents(filepath);
-commandParser.filterValidCommands(commandsFromFile);
-commandParser.processCommands();
+export { inputParser };
