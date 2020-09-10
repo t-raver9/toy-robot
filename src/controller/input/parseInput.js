@@ -5,7 +5,7 @@ const inputParser = (() => {
     "Invalid input format - please refer to docs";
   const FILEPATH_NOT_FOUND_ERROR =
     "Filepath not found! Please check your input path";
-  const DEFAULT_FILEPATH = "src/input.txt";
+  const DEFAULT_FILEPATH = "input.txt";
   var filepath;
 
   const readInput = (args) => {
