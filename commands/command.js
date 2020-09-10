@@ -1,3 +1,3 @@
-function Command() {};
+function Command() {}
 
 export { Command };

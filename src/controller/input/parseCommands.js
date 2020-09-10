@@ -1,63 +1,74 @@
-import { commandStringValidator } from '../validation/validateCommandString.js'
-import { placeCommandValidator } from '../validation/validatePlacement.js'
-import { LeftCommandFactory } from '../../commands/leftCommand.js'
-import { RightCommandFactory } from '../../commands/rightCommand.js'
-import { MoveCommandFactory } from '../../commands/moveCommand.js'
-import { PlaceCommandFactory } from '../../commands/placeCommand.js'
-import { ReportCommandFactory } from '../../commands/reportCommand.js'
-import { dir } from 'console'
+import { commandStringValidator } from "../validation/validateCommandString.js";
+import { placeCommandValidator } from "../validation/validatePlacement.js";
+import { LeftCommandFactory } from "../../commands/leftCommand.js";
+import { RightCommandFactory } from "../../commands/rightCommand.js";
+import { MoveCommandFactory } from "../../commands/moveCommand.js";
+import { PlaceCommandFactory } from "../../commands/placeCommand.js";
+import { ReportCommandFactory } from "../../commands/reportCommand.js";
 
 const commandParser = (() => {
-    const COMMAND_PLACE = 'PLACE';
-    const COMMAND_MOVE = 'MOVE';
-    const COMMAND_REPORT = 'REPORT';
-    const COMMAND_RIGHT = 'RIGHT';
-    const COMMAND_LEFT = 'LEFT';
+  const COMMAND_PLACE = "PLACE";
+  const COMMAND_MOVE = "MOVE";
+  const COMMAND_REPORT = "REPORT";
+  const COMMAND_RIGHT = "RIGHT";
+  const COMMAND_LEFT = "LEFT";
 
-    let validCommands;
-    let commandObjectsList = new Array();
+  const INVALID_PLACEMENT_ERRORSTRING = "INVALID PLACEMENT";
+  const NEWLINE = "\n";
 
-    const filterValidCommands = (input) => {
-        const commands = input.toString().split('\n');
-        commands.forEach(command => {
-            if (!commandStringValidator.checkCommand(command)) {
-                console.log(
-                    `WARNING: Invalid format for command ${command}. Command will be ignored\n`
-                    );
-            }
-        })
-        validCommands = commands.filter(command => 
-            commandStringValidator.checkCommand(command));
-    }
+  let validCommands = new Array();
+  let commandObjectsList = new Array();
 
-    const processCommands = () => {
-        let placeCommandSeen = false;
-        for (let i=0; i<validCommands.length; i++) {
-            if (validCommands[i].startsWith(COMMAND_PLACE)) {
-                let { x, y, direction } = placeCommandValidator.placeCommandSplitter(validCommands[i]);
-                if (placeCommandValidator.checkValidPlacement(x, y)) {
-                    placeCommandSeen = true;
-                    commandObjectsList.push(PlaceCommandFactory(x, y, direction));
-                } else {
-                    throw 'INVALID PLACEMENT';
-                }
-            } else if (!placeCommandSeen) {
-                continue;
-            } else if (validCommands[i] === COMMAND_MOVE) {
-                commandObjectsList.push(MoveCommandFactory());
-            } else if (validCommands[i] === COMMAND_REPORT) {
-                commandObjectsList.push(ReportCommandFactory());
-            } else if (validCommands[i] === COMMAND_RIGHT) {
-                commandObjectsList.push(RightCommandFactory());
-            } else if (placeCommandSeen) {
-                commandObjectsList.push(LeftCommandFactory());
-            }
+  const filterValidCommands = (input) => {
+    const commands = input.toString().split(`${NEWLINE}`);
+    commands.forEach((command) => {
+      if (!commandStringValidator.checkCommand(command)) {
+        console.log(
+          `WARNING: Invalid format for command ${command}. Command will be ignored${NEWLINE}`
+        );
+      }
+    });
+    validCommands = commands.filter((command) =>
+      commandStringValidator.checkCommand(command)
+    );
+    return validCommands;
+  };
+
+  const processCommands = () => {
+    let placeCommandSeen = false;
+    for (let command of validCommands) {
+      // If a place command, ensure it's valid
+      if (command.startsWith(COMMAND_PLACE)) {
+        let { x, y, direction } = placeCommandValidator.placeCommandSplitter(
+          command
+        );
+        if (placeCommandValidator.checkValidPlacement(x, y)) {
+          placeCommandSeen = true;
+          commandObjectsList.push(PlaceCommandFactory(x, y, direction));
+        } else {
+          throw `${INVALID_PLACEMENT_ERRORSTRING}`;
         }
-        return commandObjectsList;
+        // Otherwise, generate a command object
+      } else {
+        switch (command) {
+          case COMMAND_MOVE:
+            commandObjectsList.push(MoveCommandFactory());
+            break;
+          case COMMAND_REPORT:
+            commandObjectsList.push(ReportCommandFactory());
+            break;
+          case COMMAND_RIGHT:
+            commandObjectsList.push(RightCommandFactory());
+            break;
+          case COMMAND_LEFT:
+            commandObjectsList.push(LeftCommandFactory());
+        }
+      }
     }
+    return commandObjectsList;
+  };
 
-    return { filterValidCommands, processCommands };
-
+  return { filterValidCommands, processCommands };
 })();
 
 export { commandParser };

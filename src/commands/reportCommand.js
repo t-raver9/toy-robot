@@ -1,13 +1,13 @@
-import { Command } from './command.js'
+import { Command } from "./command.js";
 
-function ReportCommand() {};
+function ReportCommand() {}
 ReportCommand.prototype = Object.create(Command.prototype);
 ReportCommand.prototype.getCommandString = () => {
-    return 'REPORT';
-}
+  return "REPORT";
+};
 
 const ReportCommandFactory = () => {
-    return new ReportCommand();
-}
+  return new ReportCommand();
+};
 
 export { ReportCommandFactory, ReportCommand };

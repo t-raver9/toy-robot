@@ -1,6 +1,6 @@
-import { Command } from './command.js'
+import { Command } from "./command.js";
 
-function RotateCommand() {};
+function RotateCommand() {}
 RotateCommand.prototype = Object.create(Command.prototype);
 
 export { RotateCommand };

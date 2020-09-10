@@ -1,13 +1,13 @@
-import { Command } from './command.js'
+import { Command } from "./command.js";
 
-function MoveCommand() {};
+function MoveCommand() {}
 MoveCommand.prototype = Object.create(Command.prototype);
 MoveCommand.prototype.getCommandString = () => {
-    return 'MOVE';
-}
+  return "MOVE";
+};
 
 const MoveCommandFactory = () => {
-    return new MoveCommand();
-}
+  return new MoveCommand();
+};
 
 export { MoveCommandFactory, MoveCommand };

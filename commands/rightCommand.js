@@ -1,13 +1,13 @@
-import { Command } from './command.js'
+import { Command } from "./command.js";
 
-function RightCommand() {};
+function RightCommand() {}
 RightCommand.prototype = Object.create(Command.prototype);
 RightCommand.prototype.getCommandString = () => {
-    return 'RIGHT';
-}
+  return "RIGHT";
+};
 
 const RightCommandFactory = () => {
-    return new RightCommand();
-}
+  return new RightCommand();
+};
 
 export { RightCommandFactory, RightCommand };

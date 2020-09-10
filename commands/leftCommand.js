@@ -1,13 +1,13 @@
-import { Command } from './command.js'
+import { Command } from "./command.js";
 
-function LeftCommand() {};
+function LeftCommand() {}
 LeftCommand.prototype = Object.create(Command.prototype);
 LeftCommand.prototype.getCommandString = () => {
-    return 'LEFT';
-}
+  return "LEFT";
+};
 
 const LeftCommandFactory = () => {
-    return new LeftCommand();
-}
+  return new LeftCommand();
+};
 
 export { LeftCommandFactory, LeftCommand };
