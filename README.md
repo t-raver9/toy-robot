@@ -19,7 +19,9 @@ This toy robot will follow the commands given to it in input.txt. Commands you c
 
 ## Instructions
 Once you've cloned this repo and installed node, update the input.txt to take your toy robot on the journey you desire. Once your route is prepared, run
+
 node src/app/toyRobot.js
+
 from your command line.
 
 Happy roboting!
