@@ -8,6 +8,10 @@ const inputParser = (() => {
   const DEFAULT_FILEPATH = "input.txt";
   var filepath;
 
+  /* readInput is used when the robot is invoked with a
+     command-line argument of the path of the file. This
+     feature is't currently in use - the input will come
+     from DEFAULT_FILEPATH by default */
   const readInput = (args) => {
     const input = args;
     if (checkValidInputFormat(input)) {
@@ -22,10 +26,12 @@ const inputParser = (() => {
     return DEFAULT_FILEPATH;
   };
 
+  // Used if filepath passed as command-line argument
   const checkValidInputFormat = (input) => {
     return input.length == 3;
   };
 
+  // Used if filepath passed as command-line argument
   const extractFilePath = (input) => {
     return input[2];
   };

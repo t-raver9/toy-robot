@@ -22,10 +22,9 @@ test("Filter invalid typos", () => {
 });
 
 test("Empty instruction file", () => {
-    const fileContents = fs.readFileSync(
-      "test/controller/input/typos.txt",
-      "utf8"
-    );
-    expect(commandParser.filterValidCommands(fileContents)).toStrictEqual([]);
-  });
-  
+  const fileContents = fs.readFileSync(
+    "test/controller/input/typos.txt",
+    "utf8"
+  );
+  expect(commandParser.filterValidCommands(fileContents)).toStrictEqual([]);
+});

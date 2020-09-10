@@ -19,6 +19,7 @@ const commandParser = (() => {
   let validCommands = new Array();
   let commandObjectsList = new Array();
 
+  // Skip any commands from the input file that aren't valid format
   const filterValidCommands = (input) => {
     const commands = input.toString().split(`${NEWLINE}`);
     commands.forEach((command) => {
@@ -34,6 +35,8 @@ const commandParser = (() => {
     return validCommands;
   };
 
+  /* ProcessCommands takes the valid command strings returned from filterValidCommands,
+  creates the relevant command object, and adds it to an array */
   const processCommands = () => {
     let placeCommandSeen = false;
     for (let command of validCommands) {
