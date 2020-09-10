@@ -17,4 +17,9 @@ This toy robot will follow the commands given to it in input.txt. Commands you c
 * **REPORT**: this will log the current location and direction of the robot, in the format **X,Y,DIRECTION**
 * Aside from a place command that puts the robot off the board, any commands of an invalid format will be ignored
 
+## Instructions
+Once you've cloned this repo and installed node, update the input.txt to take your toy robot on the journey you desire. Once your route is prepared, run
+node src/app/toyRobot.js
+from your command line.
+
 Happy roboting!
